@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class AggressiveWeapon : Weapon
 {
@@ -9,6 +10,7 @@ public class AggressiveWeapon : Weapon
 
 
     private List<IDamageable> detectedDamageable = new List<IDamageable>();
+
 
     protected override void Awake()
     {
@@ -20,11 +22,11 @@ public class AggressiveWeapon : Weapon
             aggressiveWeaponData = (SO_AggressiveWeaponData)weaponData;
             //Debug.Log("sword");
         }
-        /*else if (weaponData.GetType() == typeof(SO_Fist_Aggressive_weapon))
+        else if (weaponData.GetType() == typeof(SO_Fist_Aggressive_weapon))
        {
             FistaggressiveWeaponData = (SO_Fist_Aggressive_weapon)weaponData;
-            Debug.Log("fist");
-        }*/
+            //Debug.Log("fist");
+        }
         else
         {
             Debug.LogError("wrong data for the weapon");
@@ -35,24 +37,37 @@ public class AggressiveWeapon : Weapon
     {
         base.AnimationActionTrigger();
 
+        //Debug.Log("before");
         CheckMeleeAttack();
         //Debug.Log("AnimationActionTrigger");
     }
 
     private void CheckMeleeAttack()
     {
-        //Debug.Log(detectedDamageable);
-        WeaponAttackDetails sdetails = aggressiveWeaponData.AttackDetails[attackCounter];
-        //WeaponAttackDetails Fdetails = aggressiveWeaponData.AttackDetails[attackCounter];
 
-
-        foreach (IDamageable item in detectedDamageable)
+        if (weaponData.GetType() == typeof(SO_Fist_Aggressive_weapon))
         {
-            item.Damage(sdetails.damageAmount);
-            //item.Damage(sdetails.damageAmount);
+            WeaponAttackDetails fdetails = FistaggressiveWeaponData.AttackDetails[attackCounter];
+           
+            foreach (IDamageable item in detectedDamageable.ToList())
+            {
+               
+                item.Damage(fdetails.damageAmount);
+              
+            }
 
-            //Debug.Log("IDamageable");
         }
+        else if (weaponData.GetType() == typeof(SO_AggressiveWeaponData))
+        {
+            WeaponAttackDetails sdetails = aggressiveWeaponData.AttackDetails[attackCounter];
+            foreach (IDamageable item in detectedDamageable.ToList())
+            {
+
+                item.Damage(sdetails.damageAmount);
+
+            }
+        }
+        
     }
 
     public void AddToDetected(Collider2D collision)
@@ -63,7 +78,7 @@ public class AggressiveWeapon : Weapon
         if(damageable != null)
         {
             detectedDamageable.Add(damageable);
-            //Debug.Log(detectedDamageable.Count);
+           // Debug.Log("dam");
         }
     }
     public void RemoveFromDetected(Collider2D collision)

@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newAggressiveWeaponData", menuName = "Data/Weapon Data/Fist_Aggressive Weapon")]
 public class SO_Fist_Aggressive_weapon :  SO_WeaponData
 {
-    
     [SerializeField] private WeaponAttackDetails[] attackDetails;
 
     public WeaponAttackDetails[] AttackDetails { get => attackDetails; set => attackDetails = value; }
