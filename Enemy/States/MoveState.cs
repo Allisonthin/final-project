@@ -21,8 +21,8 @@ public class MoveState : State
     {
         base.Docheck();
 
-        isDetectingLedge = entity.checkLedge();
-        isDetectingWall = entity.checkWall();
+        isDetectingLedge = core.CollisionSenses.LedgeVertical;
+        isDetectingWall = core.CollisionSenses.WallFront;
 
         isplayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
     }
@@ -30,7 +30,7 @@ public class MoveState : State
     public override void Enter()
     {
         base.Enter();
-        entity.SetVelocity(stateData.movementSpeed);
+        core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
 
         
         //isplayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();

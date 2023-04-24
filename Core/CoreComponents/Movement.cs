@@ -73,7 +73,7 @@ public class Movement : CoreComponent
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
         FacingDirection *= -1;
 

@@ -41,9 +41,9 @@ public class Enemy1 : Entity
     private Transform melleeAttackPosition;
     
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         // calling contructor for their respective class
         moveState = new E1_MoveState(this, stateMachine, "move", moveStateData, this);
